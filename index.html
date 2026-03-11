@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paedswest – Paediatric Neurology &amp; Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #111827; background: #fff; line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; cursor: pointer; }
+    button { font-family: 'Inter', sans-serif; cursor: pointer; }
+
+    /* ─── SCROLL FADE ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s cubic-bezier(.22,.61,.36,1), transform 0.65s cubic-bezier(.22,.61,.36,1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+    .fade-up.delay-5 { transition-delay: 0.5s; }
+    .fade-up.delay-6 { transition-delay: 0.6s; }
+
+    /* ─── TOP BAR ─── */
+    .top-bar {
+      background: #0f1f38;
+      color: #94a3b8;
+      font-size: 13px;
+      padding: 8px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .top-bar-left { display: flex; gap: 24px; align-items: center; }
+    .top-bar-item { display: flex; align-items: center; gap: 7px; }
+    .top-bar-right { display: flex; align-items: center; gap: 7px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      background: #1e2d4a;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; font-weight: 800; flex-shrink: 0;
+    }
+    .nav-logo-name { font-size: 17px; font-weight: 700; color: #111827; line-height: 1.2; }
+    .nav-logo-sub  { font-size: 12px; color: #6b7280; font-weight: 400; }
+    .nav-links { display: flex; align-items: center; gap: 2px; margin-right: 20px; }
+    .nav-links a {
+      padding: 7px 13px; border-radius: 6px;
+      font-size: 14px; font-weight: 500; color: #374151;
+      transition: background .15s, color .15s;
+    }
+    .nav-links a:hover { background: #f3f4f6; color: #111827; }
+    .nav-links a.active { background: #f3f4f6; color: #111827; font-weight: 600; }
+    .btn-nav {
+      background: #1e2d4a; color: #fff;
+      padding: 10px 22px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; border: none;
+      transition: background .15s; white-space: nowrap;
+    }
+    .btn-nav:hover { background: #2d3f60; }
+
+    /* ─── PAGES ─── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ════════════════════════════
+       HOME PAGE
+    ════════════════════════════ */
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 620px;
+      padding: 70px 80px 60px 80px;
+      gap: 60px;
+      align-items: center;
+      background: #fff;
+    }
+    .hero-left { display: flex; flex-direction: column; gap: 28px; }
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      border-radius: 999px; padding: 6px 14px;
+      font-size: 13px; font-weight: 500; color: #374151;
+      width: fit-content;
+    }
+    .hero-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: #3b82f6; }
+    .hero-title { font-size: 52px; font-weight: 800; line-height: 1.08; color: #111827; letter-spacing: -1.5px; }
+    .hero-title .blue { color: #2563eb; }
+    .hero-desc { font-size: 16.5px; color: #4b5563; line-height: 1.75; max-width: 500px; }
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1e2d4a; color: #fff;
+      padding: 13px 24px; border-radius: 8px;
+      font-size: 15px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: none; transition: background .15s;
+    }
+    .btn-primary:hover { background: #2d3f60; }
+    .btn-outline {
+      background: #fff; color: #374151;
+      padding: 13px 24px; border-radius: 8px;
+      font-size: 15px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid #d1d5db; transition: background .15s;
+    }
+    .btn-outline:hover { background: #f9fafb; }
+    .hero-stats {
+      display: flex; gap: 0; padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .stat-item { padding-right: 36px; margin-right: 36px; border-right: 1px solid #e5e7eb; }
+    .stat-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .stat-num { font-size: 30px; font-weight: 800; color: #111827; line-height: 1; }
+    .stat-label { font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+    .hero-right { position: relative; height: 500px; }
+    .hero-img-wrap {
+      width: 100%; height: 100%; border-radius: 16px; overflow: hidden;
+      background: linear-gradient(135deg,#dde8f7,#c5d9f0);
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-badge {
+      position: absolute; bottom: 28px; right: -12px;
+      background: #fff; border-radius: 14px; padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 8px 36px rgba(0,0,0,0.13);
+      white-space: nowrap;
+    }
+    .badge-dot {
+      width: 14px; height: 14px; border-radius: 50%; background: #22c55e; flex-shrink: 0;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.18);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 4px rgba(34,197,94,0.18); }
+      50%      { box-shadow: 0 0 0 8px rgba(34,197,94,0.08); }
+    }
+    .badge-top { font-size: 14px; font-weight: 700; color: #111827; line-height: 1.3; }
+    .badge-bot { font-size: 12px; color: #6b7280; }
+
+    /* Services section */
+    .section { padding: 80px; }
+    .section-center { text-align: center; margin-bottom: 52px; }
+    .section-label { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #2563eb; margin-bottom: 12px; }
+    .section-title { font-size: 38px; font-weight: 800; color: #111827; line-height: 1.15; letter-spacing: -.5px; }
+    .section-desc { font-size: 16.5px; color: #6b7280; margin-top: 14px; max-width: 580px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .svc-card {
+      border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 30px; background: #fff;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .svc-card:hover { border-color: #93c5fd; box-shadow: 0 6px 24px rgba(37,99,235,.08); transform: translateY(-2px); }
+    .svc-icon {
+      width: 48px; height: 48px; border-radius: 10px; background: #f1f5f9;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; color: #1e2d4a;
+    }
+    .svc-title { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 10px; }
+    .svc-desc { font-size: 14.5px; color: #6b7280; line-height: 1.65; margin-bottom: 20px; }
+    .svc-link { font-size: 14px; font-weight: 600; color: #2563eb; display: inline-flex; align-items: center; gap: 6px; transition: gap .15s; }
+    .svc-link:hover { gap: 10px; }
+
+    /* Why Paedswest */
+    .why-bg { background: #f8fafc; padding: 80px; }
+    .why-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .why-left { display: flex; flex-direction: column; gap: 22px; }
+    .why-title { font-size: 38px; font-weight: 800; color: #111827; line-height: 1.15; letter-spacing: -.5px; }
+    .why-desc { font-size: 16px; color: #4b5563; line-height: 1.75; }
+    .why-img { width: 100%; border-radius: 14px; overflow: hidden; height: 280px; }
+    .why-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .why-right { display: flex; flex-direction: column; gap: 12px; }
+    .feat-card {
+      background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px;
+      padding: 18px 20px; display: flex; align-items: flex-start; gap: 16px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .feat-card:hover { border-color: #93c5fd; box-shadow: 0 4px 16px rgba(37,99,235,.06); }
+    .feat-icon { width: 42px; height: 42px; border-radius: 9px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #1e2d4a; }
+    .feat-title { font-size: 14.5px; font-weight: 700; color: #111827; margin-bottom: 3px; }
+    .feat-desc { font-size: 13.5px; color: #6b7280; line-height: 1.55; }
+
+    /* Team */
+    .team-section { padding: 80px; background: #fff; }
+    .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 52px; }
+    .team-card { text-align: center; }
+    .team-photo { width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; margin-bottom: 16px; background: #e5e7eb; }
+    .team-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); display: block; transition: filter .3s; }
+    .team-card:hover .team-photo img { filter: grayscale(60%); }
+    .team-name { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+    .team-role { font-size: 13.5px; color: #6b7280; line-height: 1.5; }
+    .team-btn-wrap { text-align: center; margin-top: 44px; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; border: 1.5px solid #d1d5db; color: #374151;
+      padding: 13px 28px; border-radius: 8px; font-size: 15px; font-weight: 600;
+      transition: background .15s;
+    }
+    .btn-ghost:hover { background: #f9fafb; }
+
+    /* Clinic / dark section */
+    .clinic-section { background: #0f1f38; padding: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .clinic-left { color: #fff; display: flex; flex-direction: column; gap: 28px; }
+    .clinic-title { font-size: 38px; font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -.5px; }
+    .clinic-desc { font-size: 16px; color: #94a3b8; line-height: 1.75; }
+    .clinic-info-list { display: flex; flex-direction: column; gap: 18px; }
+    .ci-item { display: flex; align-items: flex-start; gap: 16px; }
+    .ci-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(37,99,235,.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #60a5fa; }
+    .ci-label { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .ci-val { font-size: 14px; color: #94a3b8; line-height: 1.55; }
+    .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #111827; padding: 13px 24px; border-radius: 8px; font-size: 15px; font-weight: 600; border: none; transition: background .15s; }
+    .btn-white:hover { background: #f3f4f6; }
+    .clinic-map { border-radius: 14px; overflow: hidden; height: 420px; }
+    .clinic-map iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* Footer */
+    footer { background: #0f1f38; border-top: 1px solid rgba(255,255,255,.07); padding: 60px 80px 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 48px; padding-bottom: 48px; }
+    .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .footer-logo-icon { width: 38px; height: 38px; background: #1e2d4a; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 800; }
+    .footer-logo-name { font-size: 17px; font-weight: 700; color: #fff; }
+    .footer-brand-desc { font-size: 13.5px; line-height: 1.7; color: #94a3b8; max-width: 220px; }
+    .footer-col-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13.5px; color: #94a3b8; transition: color .15s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-contact-list { display: flex; flex-direction: column; gap: 12px; }
+    .footer-ci { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: #94a3b8; }
+    .footer-ci svg { flex-shrink: 0; margin-top: 2px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #64748b; }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a { color: #64748b; transition: color .15s; }
+    .footer-bottom-links a:hover { color: #94a3b8; }
+
+    /* ════════════════════════════
+       SERVICES PAGE
+    ════════════════════════════ */
+    .page-hero {
+      background: linear-gradient(160deg, #0f1f38 0%, #1a3260 100%);
+      padding: 70px 80px;
+      text-align: center;
+    }
+    .page-hero-label { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #60a5fa; margin-bottom: 14px; }
+    .page-hero-title { font-size: 52px; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -1px; }
+    .page-hero-desc { font-size: 17px; color: #94a3b8; margin-top: 18px; max-width: 620px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+
+    .svc-detail-section { padding: 72px 80px; border-bottom: 1px solid #e5e7eb; }
+    .svc-detail-section:last-of-type { border-bottom: none; }
+    .svc-detail-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .svc-detail-inner.reverse { direction: rtl; }
+    .svc-detail-inner.reverse > * { direction: ltr; }
+    .svc-detail-head { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .svc-detail-icon { width: 52px; height: 52px; border-radius: 12px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #1e2d4a; flex-shrink: 0; }
+    .svc-detail-title { font-size: 30px; font-weight: 800; color: #111827; letter-spacing: -.5px; }
+    .svc-detail-text { font-size: 15.5px; color: #4b5563; line-height: 1.8; margin-bottom: 18px; }
+    .conditions-card { background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 28px 32px; }
+    .conditions-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 16px; }
+    .conditions-list { display: flex; flex-direction: column; gap: 11px; }
+    .condition-item { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: #374151; }
+    .check-circle { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #2563eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #2563eb; }
+
+    svg { display: inline-block; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="top-bar-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg>
+      (08) 9271 1425
+    </div>
+    <div class="top-bar-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cbb9aea8aebbbfa2a4a58bbbaaaeafb8bcaeb8bfe5a8a4a6e5aabe">[email&#160;protected]</a>
+    </div>
+  </div>
+  <div class="top-bar-right">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+    Mon – Thu: 8:00 AM – 4:00 PM
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    <div>
+      <div class="nav-logo-name">Paedswest</div>
+      <div class="nav-logo-sub">Paediatric Neurology &amp; Development</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('home',this)">Home</a>
+    <a href="#" onclick="showPage('services',this)">Services</a>
+    <a href="#" onclick="showPage('team',this)">Our Team</a>
+    <a href="#" onclick="showPage('about',this)">About</a>
+    <a href="#" onclick="showPage('referrals',this)">Referrals</a>
+    <a href="#" onclick="showPage('eeg',this)">EEG Requests</a>
+    <a href="#" onclick="showPage('news',this)">News &amp; Resources</a>
+    <a href="#" onclick="showPage('contact',this)">Contact</a>
+  </div>
+  <button class="btn-nav">Book Appointment</button>
+</nav>
+
+<!-- ════ HOME PAGE ════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="fade-up visible">
+        <div class="hero-pill"><div class="hero-pill-dot"></div> Perth's Specialist Paediatric Clinic</div>
+      </div>
+      <h1 class="hero-title fade-up visible delay-1">
+        Specialist Paediatric<br>
+        <span class="blue">Neurology</span> and<br>
+        Developmental Care
+      </h1>
+      <p class="hero-desc fade-up visible delay-2">Paedswest provides expert assessment, diagnosis and management for neurological and developmental conditions in children. Our multidisciplinary team supports families across Western Australia with compassionate, evidence-based care.</p>
+      <div class="hero-buttons fade-up visible delay-3">
+        <button class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Appointment
+        </button>
+        <button class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+          Make Referral
+        </button>
+      </div>
+      <div class="hero-stats fade-up visible delay-4">
+        <div class="stat-item"><div class="stat-num">9+</div><div class="stat-label">Specialists</div></div>
+        <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Years Experience</div></div>
+        <div class="stat-item"><div class="stat-num">WA</div><div class="stat-label">Wide Telehealth</div></div>
+      </div>
+    </div>
+    <div class="hero-right fade-up visible delay-2">
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&auto=format&fit=crop&q=80" alt="Paediatric consultation" onerror="this.style.display='none'"/>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        <div><div class="badge-top">Now Accepting</div><div class="badge-bot">New Referrals</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES OVERVIEW -->
+  <section class="section">
+    <div class="section-center fade-up">
+      <div class="section-label">OUR SERVICES</div>
+      <h2 class="section-title">Comprehensive Paediatric Care</h2>
+      <p class="section-desc">We provide diagnosis, assessment and ongoing management for neurological and developmental conditions in children.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card fade-up delay-1">
+        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="svc-title">Paediatric Neurology</div>
+        <div class="svc-desc">Expert diagnosis and management of neurological conditions in children including epilepsy, seizures, headaches, and movement disorders.</div>
+        <a class="svc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+      </div>
+      <div class="svc-card fade-up delay-2">
+        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 20H4v-1a7 7 0 0 1 7-7h2a7 7 0 0 1 7 7v1h-1.5"/><circle cx="19" cy="7" r="2.5" fill="currentColor" stroke="none" opacity=".4"/></svg></div>
+        <div class="svc-title">Developmental Paediatrics</div>
+        <div class="svc-desc">Comprehensive developmental assessments for children with delays in speech, language, motor skills, cognition and behaviour.</div>
+        <a class="svc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+      </div>
+      <div class="svc-card fade-up delay-3">
+        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div>
+        <div class="svc-title">Paediatric EEG</div>
+        <div class="svc-desc">Private paediatric EEG services providing non-invasive brain wave recordings to diagnose seizures, epilepsy and other neurological conditions.</div>
+        <a class="svc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+      </div>
+      <div class="svc-card fade-up delay-1">
+        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg></div>
+        <div class="svc-title">Paediatric EMG / Nerve Conduction Studies</div>
+        <div class="svc-desc">Specialised electrophysiological testing for peripheral nerve and muscle disorders in children.</div>
+        <a class="svc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+      </div>
+      <div class="svc-card fade-up delay-2">
+        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="svc-title">Neonatal &amp; Perinatal Medicine</div>
+        <div class="svc-desc">Specialist consultation and developmental follow-up for infants including premature babies and those with perinatal complications.</div>
+        <a class="svc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+      </div>
+      <div class="svc-card fade-up delay-3">
+        <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="svc-title">Telehealth Services</div>
+        <div class="svc-desc">Remote consultations for families across regional Western Australia, providing expert paediatric neurology and developmental care from anywhere.</div>
+        <a class="svc-link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY PAEDSWEST -->
+  <section class="why-bg">
+    <div class="why-inner">
+      <div class="why-left">
+        <div class="section-label fade-up">WHY PAEDSWEST</div>
+        <h2 class="why-title fade-up delay-1">Trusted by Families Across Western Australia</h2>
+        <p class="why-desc fade-up delay-2">Paedswest provides private paediatric EEG services and comprehensive neurological assessments for children. Our dedicated team is committed to delivering the highest standard of specialist paediatric care.</p>
+        <div class="why-img fade-up delay-3">
+          <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=700&auto=format&fit=crop&q=80" alt="Child with developmental toys" onerror="this.parentElement.style.background='#dde8f7'"/>
+        </div>
+      </div>
+      <div class="why-right">
+        <div class="feat-card fade-up delay-1">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M3 21v-1a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v1"/></svg></div>
+          <div><div class="feat-title">Experienced Specialists</div><div class="feat-desc">Our team of paediatric neurologists and developmental paediatricians brings decades of combined expertise.</div></div>
+        </div>
+        <div class="feat-card fade-up delay-2">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div>
+          <div><div class="feat-title">Dedicated Paediatric EEG</div><div class="feat-desc">Private paediatric EEG services in a child-friendly environment with rapid reporting by specialist neurologists.</div></div>
+        </div>
+        <div class="feat-card fade-up delay-3">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div><div class="feat-title">Comprehensive Assessments</div><div class="feat-desc">Thorough developmental and neurological assessments using evidence-based tools and multidisciplinary approaches.</div></div>
+        </div>
+        <div class="feat-card fade-up delay-4">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div><div class="feat-title">Evidence-Based Care</div><div class="feat-desc">Treatment and management plans grounded in the latest clinical research and best-practice guidelines.</div></div>
+        </div>
+        <div class="feat-card fade-up delay-5">
+          <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20" stroke-width="3"/></svg></div>
+          <div><div class="feat-title">Telehealth Available</div><div class="feat-desc">Remote consultations for regional Western Australian families, ensuring access to specialist care from anywhere.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <div class="section-center fade-up">
+      <div class="section-label">OUR TEAM</div>
+      <h2 class="section-title">Meet Our Specialists</h2>
+      <p class="section-desc">Our dedicated team of paediatric specialists brings expertise, compassion and commitment to every consultation.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up delay-1">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&auto=format&fit=crop&q=80" alt="Dr Maina Kava" onerror="this.parentElement.style.background='#d1d5db'"/></div>
+        <div class="team-name">Dr Maina Kava</div>
+        <div class="team-role">Paediatric Neurologist</div>
+      </div>
+      <div class="team-card fade-up delay-2">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&auto=format&fit=crop&q=80" alt="Dr Ravisha Srinivasjois" onerror="this.parentElement.style.background='#d1d5db'"/></div>
+        <div class="team-name">Dr Ravisha Srinivasjois</div>
+        <div class="team-role">Developmental Paediatrician &amp; Neonatologist</div>
+      </div>
+      <div class="team-card fade-up delay-3">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&auto=format&fit=crop&q=80" alt="Dr Gail Simcock" onerror="this.parentElement.style.background='#d1d5db'"/></div>
+        <div class="team-name">Dr Gail Simcock</div>
+        <div class="team-role">Developmental Paediatrician</div>
+      </div>
+      <div class="team-card fade-up delay-4">
+        <div class="team-photo"><img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&auto=format&fit=crop&q=80" alt="Dr Pratima Gulati" onerror="this.parentElement.style.background='#d1d5db'"/></div>
+        <div class="team-name">Dr Pratima Gulati</div>
+        <div class="team-role">Paediatric Neurologist</div>
+      </div>
+    </div>
+    <div class="team-btn-wrap fade-up">
+      <button class="btn-ghost">View All Team Members <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+    </div>
+  </section>
+
+  <!-- VISIT OUR CLINIC -->
+  <section class="clinic-section">
+    <div class="clinic-left">
+      <h2 class="clinic-title fade-up">Visit Our Clinic</h2>
+      <p class="clinic-desc fade-up delay-1">Our friendly team is here to help. Contact us to book an appointment or for any enquiries about our services.</p>
+      <div class="clinic-info-list">
+        <div class="ci-item fade-up delay-1">
+          <div class="ci-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="ci-label">Address</div><div class="ci-val">99 Central Avenue, Mount Lawley WA 6050</div></div>
+        </div>
+        <div class="ci-item fade-up delay-2">
+          <div class="ci-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg></div>
+          <div><div class="ci-label">Phone</div><div class="ci-val">(08) 9271 1425</div></div>
+        </div>
+        <div class="ci-item fade-up delay-3">
+          <div class="ci-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="ci-label">Email</div><div class="ci-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="11637472746165787e7f516170747562667462653f727e7c3f7064">[email&#160;protected]</a></div></div>
+        </div>
+        <div class="ci-item fade-up delay-4">
+          <div class="ci-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+          <div><div class="ci-label">Opening Hours</div><div class="ci-val">Mon – Thu: 8:00 AM – 4:00 PM<br>Fri – Sun: Closed</div></div>
+        </div>
+      </div>
+      <button class="btn-white fade-up delay-5">Contact Us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+    </div>
+    <div class="clinic-map fade-up delay-2">
+      <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=99+Central+Avenue,+Mount+Lawley+WA+6050" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Clinic map"></iframe>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-name">Paedswest</span></div>
+        <p class="footer-brand-desc">Specialist paediatric neurology and developmental care for children and families across Western Australia.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="#" onclick="showPage('home',null)">Home</a>
+          <a href="#" onclick="showPage('services',null)">Services</a>
+          <a href="#" onclick="showPage('team',null)">Our Team</a>
+          <a href="#" onclick="showPage('about',null)">About</a>
+          <a href="#" onclick="showPage('referrals',null)">Referrals</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="#">Paediatric Neurology</a>
+          <a href="#">Developmental Paediatrics</a>
+          <a href="#">Paediatric EEG</a>
+          <a href="#">Telehealth</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-list">
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 99 Central Avenue, Mount Lawley WA 6050</div>
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg> (08) 9271 1425</div>
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2b0a7a1a7b2b6abadac82b2a3a7a6b1b5a7b1b6eca1adafeca3b7">[email&#160;protected]</a></div>
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Mon – Thu: 8:00 AM – 4:00 PM</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Paedswest. All rights reserved.</span>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    </div>
+  </footer>
+</div><!-- /page-home -->
+
+
+<!-- ════ SERVICES PAGE ════ -->
+<div id="page-services" class="page">
+  <div class="page-hero">
+    <div class="page-hero-label fade-up visible">WHAT WE OFFER</div>
+    <h1 class="page-hero-title fade-up visible delay-1">Our Services</h1>
+    <p class="page-hero-desc fade-up visible delay-2">Comprehensive specialist services for the diagnosis, assessment and ongoing management of neurological and developmental conditions in children.</p>
+  </div>
+
+  <!-- Paediatric Neurology -->
+  <div class="svc-detail-section">
+    <div class="svc-detail-inner">
+      <div class="fade-up">
+        <div class="svc-detail-head">
+          <div class="svc-detail-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <h2 class="svc-detail-title">Paediatric Neurology</h2>
+        </div>
+        <p class="svc-detail-text">Our paediatric neurology service provides comprehensive assessment, diagnosis and ongoing management for a wide range of neurological conditions in children. Our experienced paediatric neurologists use the latest evidence-based approaches to care for children with complex neurological needs.</p>
+        <p class="svc-detail-text">We work closely with families to develop individualised management plans, coordinating with allied health professionals and schools to ensure the best outcomes for every child. Our neurologists have access to on-site EEG and EMG services, enabling efficient and comprehensive diagnostic workups.</p>
+      </div>
+      <div class="conditions-card fade-up delay-2">
+        <div class="conditions-title">Conditions &amp; Indications</div>
+        <div class="conditions-list">
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Epilepsy and seizures</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Headaches and migraines</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Movement disorders</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Tics and Tourette syndrome</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Neuromuscular conditions</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Neurogenetic disorders</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Cerebral palsy</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Infant hypotonia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Developmental Paediatrics -->
+  <div class="svc-detail-section" style="background:#fafbfc;">
+    <div class="svc-detail-inner reverse">
+      <div class="conditions-card fade-up">
+        <div class="conditions-title">Conditions &amp; Indications</div>
+        <div class="conditions-list">
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Autism spectrum disorder</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> ADHD</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Speech and language delay</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Cognitive delay</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Motor delay</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Developmental delay</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Learning difficulties</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Behavioural concerns</div>
+        </div>
+      </div>
+      <div class="fade-up delay-2">
+        <div class="svc-detail-head">
+          <div class="svc-detail-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5 20v-1a7 7 0 0 1 14 0v1"/></svg></div>
+          <h2 class="svc-detail-title">Developmental Paediatrics</h2>
+        </div>
+        <p class="svc-detail-text">Our developmental paediatrics team provides thorough assessments for children who may be experiencing delays or differences in their development. We take a holistic, family-centred approach to understanding each child's unique developmental profile.</p>
+        <p class="svc-detail-text">Our multidisciplinary team includes developmental paediatricians and psychologists who work together to provide comprehensive assessments. Following assessment, we develop tailored management plans and connect families with appropriate early intervention services and support.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paediatric EEG -->
+  <div class="svc-detail-section">
+    <div class="svc-detail-inner">
+      <div class="fade-up">
+        <div class="svc-detail-head">
+          <div class="svc-detail-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div>
+          <h2 class="svc-detail-title">Paediatric EEG</h2>
+        </div>
+        <p class="svc-detail-text">Paedswest offers private paediatric EEG (electroencephalogram) services in a child-friendly environment. An EEG is a non-invasive test that records electrical activity in the brain and is an essential diagnostic tool for evaluating seizures, epilepsy and other neurological conditions in children.</p>
+        <p class="svc-detail-text">Our dedicated clinical neurophysiology scientist ensures that every EEG is conducted in a supportive, child-friendly environment. We understand that medical tests can be daunting for children and their families, and we take every step to make the experience as comfortable as possible. Results are reviewed by our paediatric neurologists and discussed with families in a timely manner.</p>
+      </div>
+      <div class="conditions-card fade-up delay-2">
+        <div class="conditions-title">Conditions &amp; Indications</div>
+        <div class="conditions-list">
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Suspected seizures</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Epilepsy monitoring</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Staring episodes</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Unexplained behavioural changes</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Sleep disorders</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Neurological assessment</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paediatric EMG -->
+  <div class="svc-detail-section" style="background:#fafbfc;">
+    <div class="svc-detail-inner reverse">
+      <div class="conditions-card fade-up">
+        <div class="conditions-title">Conditions &amp; Indications</div>
+        <div class="conditions-list">
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Muscle weakness</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Peripheral nerve disorders</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Neuromuscular conditions</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Infant hypotonia</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Suspected neuropathy</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Myopathy assessment</div>
+        </div>
+      </div>
+      <div class="fade-up delay-2">
+        <div class="svc-detail-head">
+          <div class="svc-detail-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg></div>
+          <h2 class="svc-detail-title">Paediatric EMG / Nerve Conduction Studies</h2>
+        </div>
+        <p class="svc-detail-text">Our EMG (electromyography) and nerve conduction study service provides specialised electrophysiological testing for children with suspected neuromuscular or peripheral nerve disorders. These tests help to diagnose conditions affecting the nerves and muscles.</p>
+        <p class="svc-detail-text">EMG and nerve conduction studies are performed by our experienced paediatric neurologists with expertise in electrophysiology. We take a gentle, patient approach to ensure children are as comfortable as possible during the procedure. Results are interpreted in the context of each child's clinical presentation and discussed with families promptly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Neonatal -->
+  <div class="svc-detail-section">
+    <div class="svc-detail-inner">
+      <div class="fade-up">
+        <div class="svc-detail-head">
+          <div class="svc-detail-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h2 class="svc-detail-title">Neonatal &amp; Perinatal Medicine</h2>
+        </div>
+        <p class="svc-detail-text">Our neonatal and perinatal medicine service provides specialist consultation and developmental follow-up for infants who have experienced complications during the neonatal period, including premature babies and those with birth-related challenges.</p>
+        <p class="svc-detail-text">Our neonatologist and developmental paediatricians work together to provide comprehensive follow-up for infants at risk of developmental difficulties. Early identification and intervention are key to optimising outcomes, and we work closely with families to monitor developmental milestones and connect them with appropriate support services.</p>
+      </div>
+      <div class="conditions-card fade-up delay-2">
+        <div class="conditions-title">Conditions &amp; Indications</div>
+        <div class="conditions-list">
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Premature infant follow-up</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Perinatal brain injury</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Neonatal seizures</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Developmental monitoring</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Early cerebral palsy diagnosis</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Feeding difficulties</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Telehealth -->
+  <div class="svc-detail-section" style="background:#fafbfc;">
+    <div class="svc-detail-inner reverse">
+      <div class="conditions-card fade-up">
+        <div class="conditions-title">Conditions &amp; Indications</div>
+        <div class="conditions-list">
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Follow-up consultations</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Medication reviews</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Developmental monitoring</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Initial assessments (where appropriate)</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Care coordination</div>
+          <div class="condition-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div> Regional patient support</div>
+        </div>
+      </div>
+      <div class="fade-up delay-2">
+        <div class="svc-detail-head">
+          <div class="svc-detail-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h2 class="svc-detail-title">Telehealth Services</h2>
+        </div>
+        <p class="svc-detail-text">Paedswest is committed to ensuring that families across Western Australia have access to specialist paediatric neurology and developmental services, regardless of their location. Our telehealth service provides remote consultations via secure video link.</p>
+        <p class="svc-detail-text">Telehealth consultations are available for both initial assessments (where clinically appropriate) and follow-up appointments. Our telehealth service is particularly valuable for families in regional and remote areas of Western Australia who may face significant travel to access specialist care in Perth.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer repeated -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-name">Paedswest</span></div>
+        <p class="footer-brand-desc">Specialist paediatric neurology and developmental care for children and families across Western Australia.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="#" onclick="showPage('home',null)">Home</a>
+          <a href="#" onclick="showPage('services',null)">Services</a>
+          <a href="#" onclick="showPage('team',null)">Our Team</a>
+          <a href="#" onclick="showPage('about',null)">About</a>
+          <a href="#" onclick="showPage('referrals',null)">Referrals</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="#">Paediatric Neurology</a>
+          <a href="#">Developmental Paediatrics</a>
+          <a href="#">Paediatric EEG</a>
+          <a href="#">Telehealth</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-list">
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 99 Central Avenue, Mount Lawley WA 6050</div>
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg> (08) 9271 1425</div>
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="156770767065617c7a7b556574707166627066613b767a783b7460">[email&#160;protected]</a></div>
+          <div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Mon – Thu: 8:00 AM – 4:00 PM</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Paedswest. All rights reserved.</span>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    </div>
+  </footer>
+</div><!-- /page-services -->
+
+<!-- ════ TEAM PAGE ════ -->
+<div id="page-team" class="page">
+  <style>
+    /* Team-specific styles */
+    .team-page-hero {
+      background: linear-gradient(160deg, #0f1f38 0%, #1a3260 100%);
+      padding: 80px 80px 70px;
+      text-align: center;
+    }
+    .team-cards-section { padding: 72px 80px; background: #fff; }
+    .team-cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .tcard {
+      border: 1.5px solid #e5e7eb; border-radius: 16px; overflow: hidden; background: #fff;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .tcard:hover { border-color: #93c5fd; box-shadow: 0 8px 32px rgba(37,99,235,.1); transform: translateY(-3px); }
+    .tcard-photo { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #e5e7eb; }
+    .tcard-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: grayscale(100%); display: block; transition: filter .35s, transform .35s; }
+    .tcard:hover .tcard-photo img { filter: grayscale(40%); transform: scale(1.03); }
+    .tcard-body { padding: 22px 24px 24px; }
+    .tcard-name { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+    .tcard-role { font-size: 14px; font-weight: 600; color: #2563eb; margin-bottom: 12px; }
+    .tcard-snippet { font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 18px; }
+    .tcard-link { font-size: 14px; font-weight: 600; color: #111827; display: inline-flex; align-items: center; gap: 7px; transition: gap .15s; }
+    .tcard:hover .tcard-link { gap: 11px; }
+
+    /* Profile page */
+    .profile-breadcrumb {
+      background: #fff; border-bottom: 1px solid #e5e7eb;
+      padding: 14px 80px; font-size: 14px; color: #374151;
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+    }
+    .profile-breadcrumb:hover { color: #2563eb; }
+    .profile-layout { display: grid; grid-template-columns: 360px 1fr; gap: 60px; padding: 60px 80px 80px; align-items: start; }
+    .profile-left { position: sticky; top: 90px; }
+    .profile-photo { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+    .profile-photo img { width: 100%; display: block; object-fit: cover; }
+    .profile-name { font-size: 26px; font-weight: 800; color: #111827; margin-bottom: 4px; letter-spacing: -.5px; }
+    .profile-role { font-size: 15px; font-weight: 600; color: #2563eb; margin-bottom: 6px; }
+    .profile-quals { font-size: 14px; color: #6b7280; margin-bottom: 24px; }
+    .profile-book-btn {
+      width: 100%; background: #1e2d4a; color: #fff;
+      padding: 14px; border-radius: 10px; border: none;
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background .15s;
+    }
+    .profile-book-btn:hover { background: #2d3f60; }
+    .profile-right { display: flex; flex-direction: column; gap: 36px; }
+    .profile-section-title {
+      font-size: 20px; font-weight: 700; color: #111827;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .profile-section-icon { color: #2563eb; }
+    .profile-about-text { font-size: 15.5px; color: #4b5563; line-height: 1.8; }
+    .expertise-card { background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 24px 28px; }
+    .expertise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-top: 4px; }
+    .expertise-item { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: #374151; }
+    .expertise-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #2563eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #2563eb; }
+    .conditions-title-plain { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 14px; }
+    .conditions-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .ctag {
+      background: #fff; border: 1.5px solid #e5e7eb; border-radius: 999px;
+      padding: 7px 16px; font-size: 13.5px; color: #374151; font-weight: 500;
+    }
+    .affiliations-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .affil-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: #374151; }
+    .affil-dot { width: 8px; height: 8px; border-radius: 50%; background: #2563eb; flex-shrink: 0; }
+    .page.profile-page { display: none; }
+    .page.profile-page.active { display: block; }
+  </style>
+
+  <!-- Hero -->
+  <div class="team-page-hero">
+    <div class="page-hero-label fade-up visible">OUR SPECIALISTS</div>
+    <h1 class="page-hero-title fade-up visible delay-1">Meet Our Team</h1>
+    <p class="page-hero-desc fade-up visible delay-2">Our multidisciplinary team of experienced specialists is dedicated to providing exceptional paediatric neurological and developmental care.</p>
+  </div>
+
+  <!-- Cards grid -->
+  <div class="team-cards-section">
+    <div class="team-cards-grid">
+
+      <div class="tcard fade-up delay-1" onclick="showProfile('kava')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&auto=format&fit=crop&q=80" alt="Dr Maina Kava"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Dr Maina Kava</div>
+          <div class="tcard-role">Paediatric Neurologist</div>
+          <div class="tcard-snippet">Dr Kava is an experienced paediatric neurologist with expertise in epilepsy management and...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-2" onclick="showProfile('ravisha')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&auto=format&fit=crop&q=80" alt="Dr Ravisha Srinivasjois"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Dr Ravisha Srinivasjois</div>
+          <div class="tcard-role">Developmental Paediatrician &amp; Neonatologist</div>
+          <div class="tcard-snippet">Dr Srinivasjois specialises in developmental paediatrics and neonatal follow-up, with a focus o...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-3" onclick="showProfile('simcock')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&auto=format&fit=crop&q=80" alt="Dr Gail Simcock"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Dr Gail Simcock</div>
+          <div class="tcard-role">Developmental Paediatrician</div>
+          <div class="tcard-snippet">Dr Simcock is a developmental paediatrician with expertise in comprehensive developmental...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-1" onclick="showProfile('gulati')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&auto=format&fit=crop&q=80" alt="Dr Pratima Gulati"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Dr Pratima Gulati</div>
+          <div class="tcard-role">Paediatric Neurologist</div>
+          <div class="tcard-snippet">Dr Gulati specialises in paediatric neurology with a focus on epilepsy, headache disorders, and...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-2" onclick="showProfile('suleiman')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&auto=format&fit=crop&q=80" alt="Dr Jahan Suleiman"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Dr Jahan Suleiman</div>
+          <div class="tcard-role">Paediatric Neurologist</div>
+          <div class="tcard-snippet">Dr Suleiman is a paediatric neurologist with expertise in neuromuscular conditions and...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-3" onclick="showProfile('bianco')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=600&auto=format&fit=crop&q=80" alt="Dr Tania Bianco"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Dr Tania Bianco</div>
+          <div class="tcard-role">Developmental Paediatrician</div>
+          <div class="tcard-snippet">Dr Bianco is a developmental paediatrician specialising in neurodevelopmental assessments...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-1" onclick="showProfile('ng')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=600&auto=format&fit=crop&q=80" alt="Eleanor Ng"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Eleanor Ng</div>
+          <div class="tcard-role" style="color:#0891b2;">Clinical Neurophysiology Scientist</div>
+          <div class="tcard-snippet">Eleanor is a highly skilled clinical neurophysiology scientist specialising in paediatric EEG recording...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-2" onclick="showProfile('kelly')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&auto=format&fit=crop&q=80" alt="Kelly Josh"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Kelly Josh</div>
+          <div class="tcard-role" style="color:#059669;">Practice Manager</div>
+          <div class="tcard-snippet">Kelly manages the day-to-day operations of Paedswest, ensuring a smooth and supportive...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+      <div class="tcard fade-up delay-3" onclick="showProfile('sambhara')">
+        <div class="tcard-photo"><img src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=600&auto=format&fit=crop&q=80" alt="Ms Vani Sambhara"/></div>
+        <div class="tcard-body">
+          <div class="tcard-name">Ms Vani Sambhara</div>
+          <div class="tcard-role" style="color:#7c3aed;">Psychologist</div>
+          <div class="tcard-snippet">Ms Sambhara is a psychologist providing comprehensive cognitive and developmental...</div>
+          <span class="tcard-link">View Profile <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div><div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-name">Paedswest</span></div><p class="footer-brand-desc">Specialist paediatric neurology and developmental care for children and families across Western Australia.</p></div>
+      <div><div class="footer-col-title">Quick Links</div><div class="footer-links"><a href="#" onclick="showPage('home',null)">Home</a><a href="#" onclick="showPage('services',null)">Services</a><a href="#" onclick="showPage('team',null)">Our Team</a><a href="#" onclick="showPage('about',null)">About</a><a href="#" onclick="showPage('referrals',null)">Referrals</a></div></div>
+      <div><div class="footer-col-title">Services</div><div class="footer-links"><a href="#">Paediatric Neurology</a><a href="#">Developmental Paediatrics</a><a href="#">Paediatric EEG</a><a href="#">Telehealth</a></div></div>
+      <div><div class="footer-col-title">Contact</div><div class="footer-contact-list"><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 99 Central Avenue, Mount Lawley WA 6050</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg> (08) 9271 1425</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c4b6a1a7a1b4b0adabaa84b4a5a1a0b7b3a1b7b0eaa7aba9eaa5b1">[email&#160;protected]</a></div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Mon – Thu: 8:00 AM – 4:00 PM</div></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Paedswest. All rights reserved.</span><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+  </footer>
+</div><!-- /page-team -->
+
+
+<!-- ════ INDIVIDUAL PROFILE PAGES ════ -->
+
+<!-- Helper: profile page template rendered by JS -->
+<div id="page-profile" class="page">
+  <div class="profile-breadcrumb" onclick="showPage('team', document.querySelector('.nav-links a:nth-child(3)'))">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/></svg>
+    Back to Our Team
+  </div>
+  <div class="profile-layout">
+    <div class="profile-left">
+      <div class="profile-photo"><img id="profile-img" src="" alt=""/></div>
+      <div class="profile-name" id="profile-name"></div>
+      <div class="profile-role" id="profile-role"></div>
+      <div class="profile-quals" id="profile-quals"></div>
+      <button class="profile-book-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Appointment
+      </button>
+    </div>
+    <div class="profile-right">
+      <!-- About -->
+      <div>
+        <div class="profile-section-title">
+          <svg class="profile-section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5 20v-1a7 7 0 0 1 14 0v1"/></svg>
+          About
+        </div>
+        <p class="profile-about-text" id="profile-about"></p>
+      </div>
+      <!-- Areas of Expertise -->
+      <div class="expertise-card">
+        <div class="profile-section-title" style="margin-bottom:16px;">
+          <svg class="profile-section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          Areas of Expertise
+        </div>
+        <div class="expertise-grid" id="profile-expertise"></div>
+      </div>
+      <!-- Conditions Treated -->
+      <div>
+        <div class="conditions-title-plain">Conditions Treated</div>
+        <div class="conditions-tags" id="profile-conditions"></div>
+      </div>
+      <!-- Affiliations -->
+      <div>
+        <div class="profile-section-title">
+          <svg class="profile-section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Affiliations
+        </div>
+        <div class="affiliations-list" id="profile-affiliations"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div><div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-name">Paedswest</span></div><p class="footer-brand-desc">Specialist paediatric neurology and developmental care for children and families across Western Australia.</p></div>
+      <div><div class="footer-col-title">Quick Links</div><div class="footer-links"><a href="#" onclick="showPage('home',null)">Home</a><a href="#" onclick="showPage('services',null)">Services</a><a href="#" onclick="showPage('team',null)">Our Team</a><a href="#" onclick="showPage('about',null)">About</a><a href="#" onclick="showPage('referrals',null)">Referrals</a></div></div>
+      <div><div class="footer-col-title">Services</div><div class="footer-links"><a href="#">Paediatric Neurology</a><a href="#">Developmental Paediatrics</a><a href="#">Paediatric EEG</a><a href="#">Telehealth</a></div></div>
+      <div><div class="footer-col-title">Contact</div><div class="footer-contact-list"><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 99 Central Avenue, Mount Lawley WA 6050</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg> (08) 9271 1425</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f2d3a3c3a2f2b3630311f2f3e3a3b2c283a2c2b713c3032713e2a">[email&#160;protected]</a></div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Mon – Thu: 8:00 AM – 4:00 PM</div></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Paedswest. All rights reserved.</span><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+  </footer>
+</div><!-- /page-profile -->
+
+<script>
+// ── TEAM DATA ──
+const teamData = {
+  kava: {
+    name: 'Dr Maina Kava',
+    role: 'Paediatric Neurologist',
+    quals: 'MBBS, FRACP, PhD',
+    roleColor: '#2563eb',
+    img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=700&auto=format&fit=crop&q=80',
+    about: 'Dr Maina Kava is a highly experienced paediatric neurologist who has dedicated her career to the diagnosis and management of neurological conditions in children. With extensive training in paediatric neurology, Dr Kava brings a wealth of knowledge and compassion to her practice. She is committed to providing comprehensive, family-centred care and works closely with multidisciplinary teams to ensure the best outcomes for her patients. Dr Kava has published extensively in peer-reviewed journals and is actively involved in clinical research.',
+    expertise: ['Epilepsy and seizure management','Movement disorders','Headache and migraine management','Neuromuscular disorders','Neurogenetic conditions'],
+    conditions: ['Epilepsy','Seizures','Muscular dystrophy','Cerebral palsy','Headaches and migraines','Tics and Tourette syndrome'],
+    affiliations: ['Perth Children\'s Hospital','Telethon Kids Institute','University of Western Australia']
+  },
+  ravisha: {
+    name: 'Dr Ravisha Srinivasjois',
+    role: 'Developmental Paediatrician & Neonatologist',
+    quals: 'MBBS, DCH, MD, FRACP',
+    roleColor: '#2563eb',
+    img: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=700&auto=format&fit=crop&q=80',
+    about: 'Dr Ravisha Srinivasjois is a highly experienced developmental paediatrician and neonatologist with a special interest in the developmental outcomes of preterm and high-risk infants. He brings extensive expertise in both developmental paediatrics and neonatal medicine, with a focus on early identification and intervention for children at risk of developmental difficulties.',
+    expertise: ['Neonatal follow-up','Developmental assessment','Preterm infant care','Autism spectrum disorder','ADHD assessment'],
+    conditions: ['Developmental delay','Autism spectrum disorder','ADHD','Preterm birth complications','Neonatal brain injury'],
+    affiliations: ['Perth Children\'s Hospital','King Edward Memorial Hospital','University of Western Australia']
+  },
+  simcock: {
+    name: 'Dr Gail Simcock',
+    role: 'Developmental Paediatrician',
+    quals: 'MBBS, FRACP',
+    roleColor: '#2563eb',
+    img: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=700&auto=format&fit=crop&q=80',
+    about: 'Dr Gail Simcock is a developmental paediatrician with extensive experience in comprehensive developmental assessments for children. She takes a holistic, family-centred approach to understanding each child\'s unique developmental profile and is passionate about connecting families with the right support and intervention services.',
+    expertise: ['Developmental assessment','Autism spectrum disorder','Learning difficulties','Speech and language delay','Behavioural concerns'],
+    conditions: ['Autism spectrum disorder','ADHD','Developmental delay','Learning difficulties','Behavioural concerns','Speech delay'],
+    affiliations: ['Perth Children\'s Hospital','Child Development Service WA','Curtin University']
+  },
+  gulati: {
+    name: 'Dr Pratima Gulati',
+    role: 'Paediatric Neurologist',
+    quals: 'MBBS, MD, FRACP',
+    roleColor: '#2563eb',
+    img: 'https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=700&auto=format&fit=crop&q=80',
+    about: 'Dr Pratima Gulati is a paediatric neurologist specialising in epilepsy, headache disorders, and neurodevelopmental conditions in children. She brings a compassionate, evidence-based approach to each consultation and works closely with families to develop personalised management plans.',
+    expertise: ['Epilepsy management','Headache and migraine','Neurodevelopmental conditions','Movement disorders','Infantile spasms'],
+    conditions: ['Epilepsy','Headaches and migraines','Movement disorders','Febrile seizures','Infantile spasms','Cerebral palsy'],
+    affiliations: ['Perth Children\'s Hospital','Telethon Kids Institute','Murdoch University']
+  },
+  suleiman: {
+    name: 'Dr Jahan Suleiman',
+    role: 'Paediatric Neurologist',
+    quals: 'MBBS, FRACP',
+    roleColor: '#2563eb',
+    img: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=700&auto=format&fit=crop&q=80',
+    about: 'Dr Jahan Suleiman is a paediatric neurologist with expertise in neuromuscular conditions, epilepsy, and complex neurological disorders in children. He is committed to providing thorough, compassionate care and utilises the latest evidence-based approaches in his clinical practice.',
+    expertise: ['Neuromuscular disorders','Epilepsy','Peripheral nerve disorders','Muscle diseases','Neurogenetic conditions'],
+    conditions: ['Muscular dystrophy','Peripheral neuropathy','Epilepsy','Spinal muscular atrophy','Charcot-Marie-Tooth disease','Myasthenia gravis'],
+    affiliations: ['Perth Children\'s Hospital','Fiona Stanley Hospital','University of Western Australia']
+  },
+  bianco: {
+    name: 'Dr Tania Bianco',
+    role: 'Developmental Paediatrician',
+    quals: 'MBBS, FRACP',
+    roleColor: '#2563eb',
+    img: 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=700&auto=format&fit=crop&q=80',
+    about: 'Dr Tania Bianco is a developmental paediatrician specialising in neurodevelopmental assessments and the diagnosis and management of developmental conditions in children. She is passionate about early identification and supporting families through the diagnostic process with empathy and expertise.',
+    expertise: ['Neurodevelopmental assessment','Autism spectrum disorder','ADHD','School difficulties','Social communication'],
+    conditions: ['Autism spectrum disorder','ADHD','Developmental delay','School difficulties','Social communication difficulties','Intellectual disability'],
+    affiliations: ['Perth Children\'s Hospital','Child Development Service WA','Edith Cowan University']
+  },
+  ng: {
+    name: 'Eleanor Ng',
+    role: 'Clinical Neurophysiology Scientist',
+    quals: 'BSc (Hons) Clinical Neurophysiology',
+    roleColor: '#0891b2',
+    img: 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=700&auto=format&fit=crop&q=80',
+    about: 'Eleanor Ng is a highly skilled clinical neurophysiology scientist specialising in paediatric EEG recording and analysis. She ensures every EEG is conducted in a supportive, child-friendly environment with the highest technical standards. Eleanor works closely with the medical team to deliver accurate, timely reporting for each patient.',
+    expertise: ['Paediatric EEG recording','Sleep EEG','Video EEG monitoring','Neonatal EEG','EMG nerve conduction studies'],
+    conditions: ['Suspected seizures','Epilepsy monitoring','Sleep disorders','Staring episodes','Unexplained behavioural changes'],
+    affiliations: ['Paedswest','Perth Children\'s Hospital','Australian and New Zealand Society of Clinical Neurophysiologists']
+  },
+  kelly: {
+    name: 'Kelly Josh',
+    role: 'Practice Manager',
+    quals: 'BBus (Health Management)',
+    roleColor: '#059669',
+    img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=700&auto=format&fit=crop&q=80',
+    about: 'Kelly Josh manages the day-to-day operations of Paedswest, ensuring a smooth and supportive experience for every patient and family. She leads the administrative team with warmth and professionalism, coordinating appointments, referrals, and all aspects of clinic management.',
+    expertise: ['Practice management','Patient experience','Referral coordination','Team leadership','Healthcare administration'],
+    conditions: [],
+    affiliations: ['Paedswest','Australian Practice Managers Association']
+  },
+  sambhara: {
+    name: 'Ms Vani Sambhara',
+    role: 'Psychologist',
+    quals: 'BPsych (Hons), MPsych (Clinical)',
+    roleColor: '#7c3aed',
+    img: 'https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=700&auto=format&fit=crop&q=80',
+    about: 'Ms Vani Sambhara is a psychologist providing comprehensive cognitive and developmental assessments for children and young people. She works alongside the medical team to offer a multidisciplinary approach to understanding each child\'s needs, and supports families in accessing appropriate intervention and therapeutic services.',
+    expertise: ['Cognitive assessment','Developmental assessment','Psychological assessment','ASD diagnostic assessment','Behavioural support'],
+    conditions: ['Autism spectrum disorder','ADHD','Anxiety','Learning difficulties','Intellectual disability','Emotional and behavioural difficulties'],
+    affiliations: ['Paedswest','Australian Psychological Society','Psychology Board of Australia']
+  }
+};
+
+function showProfile(id) {
+  const d = teamData[id];
+  if (!d) return;
+
+  document.getElementById('profile-img').src = d.img;
+  document.getElementById('profile-img').alt = d.name;
+  document.getElementById('profile-name').textContent = d.name;
+  const roleEl = document.getElementById('profile-role');
+  roleEl.textContent = d.role;
+  roleEl.style.color = d.roleColor || '#2563eb';
+  document.getElementById('profile-quals').textContent = d.quals;
+  document.getElementById('profile-about').textContent = d.about;
+
+  // Expertise
+  const expEl = document.getElementById('profile-expertise');
+  expEl.innerHTML = d.expertise.map(e => `
+    <div class="expertise-item">
+      <div class="expertise-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20,6 9,17 4,12"/></svg></div>
+      ${e}
+    </div>`).join('');
+
+  // Conditions
+  const condEl = document.getElementById('profile-conditions');
+  condEl.innerHTML = d.conditions.length
+    ? d.conditions.map(c => `<span class="ctag">${c}</span>`).join('')
+    : '<span style="color:#9ca3af;font-size:14px;">Not applicable</span>';
+
+  // Affiliations
+  const affEl = document.getElementById('profile-affiliations');
+  affEl.innerHTML = d.affiliations.map(a => `
+    <div class="affil-item"><div class="affil-dot"></div>${a}</div>`).join('');
+
+  // Show profile page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-profile').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+</script>
+<div id="page-about" class="page">
+  <!-- Hero -->
+  <div style="background:linear-gradient(160deg,#0f1f38 0%,#1a3260 100%);padding:80px 80px 70px;text-align:center;">
+    <div style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;margin-bottom:14px;" class="fade-up visible">ABOUT US</div>
+    <h1 style="font-size:52px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;" class="fade-up visible delay-1">About Paedswest</h1>
+    <p style="font-size:17px;color:#94a3b8;margin-top:18px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;" class="fade-up visible delay-2">A leading paediatric neurology and developmental clinic providing specialist care for children and families across Western Australia.</p>
+  </div>
+
+  <!-- About + image -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;padding:80px 80px;align-items:start;">
+    <div class="fade-up">
+      <h2 style="font-size:34px;font-weight:800;color:#111827;line-height:1.15;letter-spacing:-.5px;margin-bottom:24px;">Dedicated to Children's Neurological Health</h2>
+      <p style="font-size:15.5px;color:#4b5563;line-height:1.8;margin-bottom:18px;">Paedswest is a specialist paediatric neurology and developmental clinic located in Mount Lawley, Perth. Our multidisciplinary team provides expert assessment, diagnosis and ongoing management for a wide range of neurological and developmental conditions in children.</p>
+      <p style="font-size:15.5px;color:#4b5563;line-height:1.8;margin-bottom:18px;">Founded with a commitment to delivering the highest standard of paediatric care, Paedswest brings together experienced paediatric neurologists, developmental paediatricians, a clinical neurophysiology scientist, and allied health professionals. We believe that every child deserves access to expert, compassionate care.</p>
+      <p style="font-size:15.5px;color:#4b5563;line-height:1.8;">Our clinic is equipped with dedicated paediatric EEG and EMG services, enabling comprehensive diagnostic workups in a child-friendly environment. We also offer telehealth consultations for families across regional Western Australia, ensuring that distance is never a barrier to accessing specialist care.</p>
+    </div>
+    <div class="fade-up delay-2" style="border-radius:16px;overflow:hidden;height:460px;">
+      <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=900&auto=format&fit=crop&q=80" alt="Paedswest clinic" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.background='#dde8f7'"/>
+    </div>
+  </div>
+
+  <!-- Our Values -->
+  <div style="background:#f8fafc;padding:80px;">
+    <div style="text-align:center;margin-bottom:56px;" class="fade-up">
+      <h2 style="font-size:42px;font-weight:800;color:#111827;letter-spacing:-.5px;">Our Values</h2>
+      <p style="font-size:16.5px;color:#6b7280;margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65;">Everything we do is guided by our commitment to providing exceptional, compassionate care for every child and family.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1100px;margin:0 auto;">
+
+      <div class="fade-up delay-1" style="background:#fff;border:1.5px solid #e5e7eb;border-radius:14px;padding:36px 32px;">
+        <div style="width:48px;height:48px;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:#1e2d4a;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:10px;">Compassionate Care</div>
+        <p style="font-size:14.5px;color:#6b7280;line-height:1.7;">We understand the concerns families face when seeking specialist care for their child. Every interaction is guided by empathy and understanding.</p>
+      </div>
+
+      <div class="fade-up delay-2" style="background:#fff;border:1.5px solid #e5e7eb;border-radius:14px;padding:36px 32px;">
+        <div style="width:48px;height:48px;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:#1e2d4a;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:10px;">Family-Centred Approach</div>
+        <p style="font-size:14.5px;color:#6b7280;line-height:1.7;">We partner with families at every step, ensuring parents are informed, supported and empowered in their child's care journey.</p>
+      </div>
+
+      <div class="fade-up delay-3" style="background:#fff;border:1.5px solid #e5e7eb;border-radius:14px;padding:36px 32px;">
+        <div style="width:48px;height:48px;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:#1e2d4a;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        </div>
+        <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:10px;">Clinical Excellence</div>
+        <p style="font-size:14.5px;color:#6b7280;line-height:1.7;">Our team upholds the highest standards of medical practice, drawing on extensive training and ongoing professional development.</p>
+      </div>
+
+      <div class="fade-up delay-4" style="background:#fff;border:1.5px solid #e5e7eb;border-radius:14px;padding:36px 32px;">
+        <div style="width:48px;height:48px;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:#1e2d4a;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div style="font-size:18px;font-weight:700;color:#111827;margin-bottom:10px;">Evidence-Based Practice</div>
+        <p style="font-size:14.5px;color:#6b7280;line-height:1.7;">All treatment and management plans are grounded in the latest clinical research and best-practice guidelines.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div style="padding:60px 80px;">
+    <div class="fade-up" style="background:#0f1f38;border-radius:20px;padding:64px;text-align:center;">
+      <h2 style="font-size:42px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:18px;">Ready to Get Started?</h2>
+      <p style="font-size:16.5px;color:#94a3b8;max-width:520px;margin:0 auto 36px;line-height:1.65;">Contact us to book an appointment or make a referral. Our team is here to support your child's neurological and developmental health.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <button style="background:#fff;color:#111827;padding:14px 30px;border-radius:8px;font-size:15px;font-weight:600;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+          Book Appointment
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+        <button style="background:rgba(255,255,255,0.12);color:#fff;padding:14px 30px;border-radius:8px;font-size:15px;font-weight:600;border:1.5px solid rgba(255,255,255,0.25);cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+          Make a Referral
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div><div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-name">Paedswest</span></div><p class="footer-brand-desc">Specialist paediatric neurology and developmental care for children and families across Western Australia.</p></div>
+      <div><div class="footer-col-title">Quick Links</div><div class="footer-links"><a href="#" onclick="showPage('home',null)">Home</a><a href="#" onclick="showPage('services',null)">Services</a><a href="#" onclick="showPage('team',null)">Our Team</a><a href="#" onclick="showPage('about',null)">About</a><a href="#" onclick="showPage('referrals',null)">Referrals</a></div></div>
+      <div><div class="footer-col-title">Services</div><div class="footer-links"><a href="#">Paediatric Neurology</a><a href="#">Developmental Paediatrics</a><a href="#">Paediatric EEG</a><a href="#">Telehealth</a></div></div>
+      <div><div class="footer-col-title">Contact</div><div class="footer-contact-list"><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 99 Central Avenue, Mount Lawley WA 6050</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg> (08) 9271 1425</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a0d2c5c3c5d0d4c9cfcee0d0c1c5c4d3d7c5d3d48ec3cfcd8ec1d5">[email&#160;protected]</a></div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Mon – Thu: 8:00 AM – 4:00 PM</div></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Paedswest. All rights reserved.</span><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+  </footer>
+</div>
+<div id="page-referrals" class="page">
+<style>
+.ref-hero{background:linear-gradient(160deg,#0f1f38 0%,#1a3260 100%);padding:80px 80px 70px;text-align:center}
+.ref-wrap{max-width:760px;margin:0 auto;padding:60px 40px 80px}
+.ref-req-box{background:#f0f6ff;border:1.5px solid #bfdbfe;border-radius:14px;padding:24px 28px;margin-bottom:44px;display:flex;gap:16px;align-items:flex-start}
+.ref-req-icon{flex-shrink:0;color:#2563eb;margin-top:2px}
+.ref-req-title{font-size:15px;font-weight:700;color:#1e3a8a;margin-bottom:10px}
+.ref-req-list{display:flex;flex-direction:column;gap:6px}
+.ref-req-item{font-size:13.5px;color:#1e40af;display:flex;align-items:center;gap:8px}
+.ref-req-item::before{content:"•";color:#3b82f6;font-size:16px;line-height:1}
+
+/* Steps */
+.ref-steps{display:flex;align-items:center;margin-bottom:40px}
+.ref-step-item{display:flex;align-items:center;gap:10px;flex:1}
+.ref-step-item:not(:last-child)::after{content:'';flex:1;height:2px;background:#e5e7eb;margin:0 8px;transition:background .3s}
+.ref-step-item.done:not(:last-child)::after,.ref-step-item.active:not(:last-child)::after{background:#2563eb}
+.ref-step-num{width:32px;height:32px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#9ca3af;background:#fff;flex-shrink:0;transition:all .2s}
+.ref-step-item.active .ref-step-num{border-color:#1e2d4a;background:#1e2d4a;color:#fff}
+.ref-step-item.done .ref-step-num{border-color:#2563eb;background:#2563eb;color:#fff}
+.ref-step-lbl{font-size:13.5px;font-weight:600;color:#9ca3af;white-space:nowrap;transition:color .2s}
+.ref-step-item.active .ref-step-lbl,.ref-step-item.done .ref-step-lbl{color:#1e2d4a}
+
+/* Panel */
+.ref-panel{display:none}.ref-panel.active{display:block}
+.ref-panel-title{font-size:22px;font-weight:800;color:#1e2d4a;margin-bottom:28px}
+.ref-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.ref-row.full{grid-template-columns:1fr}
+.ref-field{display:flex;flex-direction:column;gap:6px}
+.ref-lbl{font-size:13px;font-weight:600;color:#374151}
+.req{color:#ef4444}
+.ref-input,.ref-select,.ref-textarea{padding:10px 14px;border:1.5px solid #d1d5db;border-radius:8px;font-size:14px;color:#111827;font-family:inherit;background:#fff;outline:none;width:100%;box-sizing:border-box;transition:border-color .15s,box-shadow .15s}
+.ref-input:focus,.ref-select:focus,.ref-textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.ref-textarea{resize:vertical;min-height:110px;line-height:1.6}
+.ref-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+
+/* Nav buttons */
+.ref-nav{display:flex;justify-content:space-between;align-items:center;margin-top:36px;padding-top:24px;border-top:1.5px solid #e5e7eb}
+.btn-prev{background:#fff;border:1.5px solid #d1d5db;color:#374151;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-prev:hover{background:#f9fafb}
+.btn-next,.btn-submit{background:#1e2d4a;color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-next:hover,.btn-submit:hover{background:#2d3f60}
+.btn-submit{background:#2563eb}.btn-submit:hover{background:#1d4ed8}
+
+/* Success */
+.ref-success{text-align:center;padding:60px 20px;display:none}
+.ref-success.active{display:block}
+.success-icon{width:72px;height:72px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;color:#16a34a}
+.ref-success h2{font-size:28px;font-weight:800;color:#111827;margin-bottom:12px}
+.ref-success p{font-size:15.5px;color:#6b7280;max-width:440px;margin:0 auto 28px;line-height:1.7}
+</style>
+
+<!-- Hero -->
+<div class="ref-hero">
+  <div style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;margin-bottom:14px;">FOR CLINICIANS</div>
+  <h1 style="font-size:52px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:16px;">Make a Referral</h1>
+  <p style="font-size:17px;color:#94a3b8;max-width:580px;margin:0 auto;line-height:1.65;">Submit a referral for your patient. Please provide as much clinical information as possible to ensure timely triage.</p>
+</div>
+
+<div class="ref-wrap">
+  <!-- Requirements box -->
+  <div class="ref-req-box">
+    <div class="ref-req-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div>
+      <div class="ref-req-title">Referral Requirements</div>
+      <div class="ref-req-list">
+        <div class="ref-req-item">Patient details including Medicare number</div>
+        <div class="ref-req-item">Referring doctor details and provider number</div>
+        <div class="ref-req-item">Clinical reason for referral</div>
+        <div class="ref-req-item">Relevant reports and investigations</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps indicator -->
+  <div class="ref-steps" id="ref-steps">
+    <div class="ref-step-item active" id="step-1">
+      <div class="ref-step-num">1</div>
+      <div class="ref-step-lbl">Referrer Details</div>
+    </div>
+    <div class="ref-step-item" id="step-2">
+      <div class="ref-step-num">2</div>
+      <div class="ref-step-lbl">Patient Details</div>
+    </div>
+    <div class="ref-step-item" id="step-3">
+      <div class="ref-step-num">3</div>
+      <div class="ref-step-lbl">Clinical Information</div>
+    </div>
+  </div>
+
+  <!-- Panel 1: Referrer Details -->
+  <div class="ref-panel active" id="ref-panel-1">
+    <div class="ref-panel-title">Referrer Details</div>
+    <div class="ref-row">
+      <div class="ref-field">
+        <label class="ref-lbl">Referrer Name <span class="req">*</span></label>
+        <input class="ref-input" type="text" placeholder="Dr. Full Name"/>
+      </div>
+      <div class="ref-field">
+        <label class="ref-lbl">Practice Name</label>
+        <input class="ref-input" type="text" placeholder="Practice or clinic name"/>
+      </div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-field">
+        <label class="ref-lbl">Provider Number</label>
+        <input class="ref-input" type="text" placeholder="Medicare provider number"/>
+      </div>
+      <div class="ref-field">
+        <label class="ref-lbl">Phone</label>
+        <input class="ref-input" type="tel" placeholder="(08) xxxx xxxx"/>
+      </div>
+    </div>
+    <div class="ref-row full">
+      <div class="ref-field">
+        <label class="ref-lbl">Email <span class="req">*</span></label>
+        <input class="ref-input" type="email" placeholder="your@email.com.au"/>
+      </div>
+    </div>
+    <div class="ref-nav">
+      <span></span>
+      <button class="btn-next" onclick="refNext(1)">Continue</button>
+    </div>
+  </div>
+
+  <!-- Panel 2: Patient Details -->
+  <div class="ref-panel" id="ref-panel-2">
+    <div class="ref-panel-title">Patient Details</div>
+    <div class="ref-row">
+      <div class="ref-field">
+        <label class="ref-lbl">Patient First Name <span class="req">*</span></label>
+        <input class="ref-input" type="text" placeholder="First name"/>
+      </div>
+      <div class="ref-field">
+        <label class="ref-lbl">Patient Last Name <span class="req">*</span></label>
+        <input class="ref-input" type="text" placeholder="Last name"/>
+      </div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-field">
+        <label class="ref-lbl">Date of Birth <span class="req">*</span></label>
+        <input class="ref-input" type="date"/>
+      </div>
+      <div class="ref-field">
+        <label class="ref-lbl">Gender</label>
+        <select class="ref-select">
+          <option value="">Select...</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other / Prefer not to say</option>
+        </select>
+      </div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-field">
+        <label class="ref-lbl">Medicare Number</label>
+        <input class="ref-input" type="text" placeholder="xxxx xxxxx x"/>
+      </div>
+      <div class="ref-field">
+        <label class="ref-lbl">Patient Phone</label>
+        <input class="ref-input" type="tel" placeholder="Parent / guardian contact"/>
+      </div>
+    </div>
+    <div class="ref-row full">
+      <div class="ref-field">
+        <label class="ref-lbl">Address</label>
+        <input class="ref-input" type="text" placeholder="Street, suburb, postcode"/>
+      </div>
+    </div>
+    <div class="ref-nav">
+      <button class="btn-prev" onclick="refPrev(2)">Previous</button>
+      <button class="btn-next" onclick="refNext(2)">Continue</button>
+    </div>
+  </div>
+
+  <!-- Panel 3: Clinical Information -->
+  <div class="ref-panel" id="ref-panel-3">
+    <div class="ref-panel-title">Clinical Information</div>
+    <div class="ref-row full" style="margin-bottom:20px">
+      <div class="ref-field">
+        <label class="ref-lbl">Referral Type <span class="req">*</span></label>
+        <select class="ref-select">
+          <option value="">Select service...</option>
+          <option>Paediatric Neurology</option>
+          <option>Developmental Paediatrics</option>
+          <option>Paediatric EEG</option>
+          <option>Paediatric EMG / Nerve Conduction Studies</option>
+          <option>Neonatal &amp; Perinatal Medicine</option>
+          <option>Telehealth</option>
+        </select>
+      </div>
+    </div>
+    <div class="ref-row full" style="margin-bottom:20px">
+      <div class="ref-field">
+        <label class="ref-lbl">Clinical Reason for Referral <span class="req">*</span></label>
+        <textarea class="ref-textarea" placeholder="Please describe the presenting concern, symptoms, and reason for referral..."></textarea>
+      </div>
+    </div>
+    <div class="ref-row full" style="margin-bottom:20px">
+      <div class="ref-field">
+        <label class="ref-lbl">Relevant History &amp; Investigations</label>
+        <textarea class="ref-textarea" placeholder="Previous diagnoses, medications, relevant test results, imaging reports..."></textarea>
+      </div>
+    </div>
+    <div class="ref-row">
+      <div class="ref-field">
+        <label class="ref-lbl">Urgency</label>
+        <select class="ref-select">
+          <option value="">Select urgency...</option>
+          <option>Routine</option>
+          <option>Semi-urgent (within 4 weeks)</option>
+          <option>Urgent (within 1 week)</option>
+        </select>
+      </div>
+      <div class="ref-field">
+        <label class="ref-lbl">Preferred Appointment Type</label>
+        <select class="ref-select">
+          <option value="">Select...</option>
+          <option>In-person</option>
+          <option>Telehealth</option>
+          <option>Either</option>
+        </select>
+      </div>
+    </div>
+    <div class="ref-nav">
+      <button class="btn-prev" onclick="refPrev(3)">Previous</button>
+      <button class="btn-submit" onclick="refSubmit()">Submit Referral</button>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div class="ref-success" id="ref-success">
+    <div class="success-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+    </div>
+    <h2>Referral Submitted</h2>
+    <p>Thank you for your referral. Our team will review the information and contact you within 1–2 business days to confirm the appointment.</p>
+    <button class="btn-next" onclick="refReset()" style="margin:0 auto">Submit Another Referral</button>
+  </div>
+</div>
+
+<script>
+function refNext(step) {
+  document.getElementById('ref-panel-' + step).classList.remove('active');
+  document.getElementById('ref-panel-' + (step+1)).classList.add('active');
+  document.getElementById('step-' + step).classList.remove('active');
+  document.getElementById('step-' + step).classList.add('done');
+  document.getElementById('step-' + (step+1)).classList.add('active');
+  window.scrollTo({top: document.getElementById('page-referrals').offsetTop - 70, behavior:'smooth'});
+}
+function refPrev(step) {
+  document.getElementById('ref-panel-' + step).classList.remove('active');
+  document.getElementById('ref-panel-' + (step-1)).classList.add('active');
+  document.getElementById('step-' + step).classList.remove('active');
+  document.getElementById('step-' + (step-1)).classList.remove('done');
+  document.getElementById('step-' + (step-1)).classList.add('active');
+  window.scrollTo({top: document.getElementById('page-referrals').offsetTop - 70, behavior:'smooth'});
+}
+function refSubmit() {
+  document.getElementById('ref-panel-3').classList.remove('active');
+  document.getElementById('ref-success').classList.add('active');
+  document.getElementById('ref-steps').style.display = 'none';
+  document.getElementById('step-3').classList.remove('active');
+  document.getElementById('step-3').classList.add('done');
+}
+function refReset() {
+  [1,2,3].forEach(function(i){
+    document.getElementById('ref-panel-'+i).classList.remove('active');
+    document.getElementById('step-'+i).classList.remove('active','done');
+  });
+  document.getElementById('ref-panel-1').classList.add('active');
+  document.getElementById('step-1').classList.add('active');
+  document.getElementById('ref-success').classList.remove('active');
+  document.getElementById('ref-steps').style.display = 'flex';
+}
+</script>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-name">Paedswest</span></div><p class="footer-brand-desc">Specialist paediatric neurology and developmental care for children and families across Western Australia.</p></div>
+    <div><div class="footer-col-title">Quick Links</div><div class="footer-links"><a href="#" onclick="showPage('home',null)">Home</a><a href="#" onclick="showPage('services',null)">Services</a><a href="#" onclick="showPage('team',null)">Our Team</a><a href="#" onclick="showPage('about',null)">About</a><a href="#" onclick="showPage('referrals',null)">Referrals</a></div></div>
+    <div><div class="footer-col-title">Services</div><div class="footer-links"><a href="#">Paediatric Neurology</a><a href="#">Developmental Paediatrics</a><a href="#">Paediatric EEG</a><a href="#">Telehealth</a></div></div>
+    <div><div class="footer-col-title">Contact</div><div class="footer-contact-list"><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 99 Central Avenue, Mount Lawley WA 6050</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.07-1.07a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.6l.42 1.32z"/></svg> (08) 9271 1425</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> reception@paedswest.com.au</div><div class="footer-ci"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Mon – Thu: 8:00 AM – 4:00 PM</div></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Paedswest. All rights reserved.</span><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+</footer>
+</div>
+<div id="page-eeg" class="page"><div style="padding:120px 80px;text-align:center;font-size:22px;color:#6b7280;">EEG Requests page — send a recording to build this section!</div></div>
+<div id="page-news" class="page"><div style="padding:120px 80px;text-align:center;font-size:22px;color:#6b7280;">News &amp; Resources page — send a recording to build this section!</div></div>
+<div id="page-contact" class="page"><div style="padding:120px 80px;text-align:center;font-size:22px;color:#6b7280;">Contact page — send a recording to build this section!</div></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function showPage(name, linkEl) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var pg = document.getElementById('page-' + name);
+    if (pg) pg.classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(function(a){ a.classList.remove('active'); });
+    if (linkEl) linkEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setTimeout(observeAll, 50);
+  }
+
+  function observeAll() {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.page.active .fade-up:not(.visible)').forEach(function(el) {
+      observer.observe(el);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() { observeAll(); });
+  observeAll();
+</script>
+</body>
+</html>
