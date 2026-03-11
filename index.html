@@ -296,6 +296,47 @@
   width: auto;        /* maintain aspect ratio */
   border-radius: 6px; /* optional, match nav bar styling */
   object-fit: contain; /* ensures full logo fits inside box */
+}/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 768px) {
+    /* Adjust Padding for smaller screens */
+    .top-bar, nav, .hero, .section, .why-bg, .clinic-section, .page-hero, .svc-detail-section, footer {
+        padding: 24px 20px !important;
+    }
+
+    /* Top Bar: Stack info */
+    .top-bar { flex-direction: column; gap: 8px; text-align: center; }
+    .top-bar-left { flex-direction: column; gap: 4px; }
+
+    /* Nav: Stack logo and links */
+    nav { height: auto; flex-direction: column; padding: 16px 20px !important; gap: 16px; }
+    .nav-logo { margin-right: 0; }
+    .nav-links { flex-wrap: wrap; justify-content: center; }
+
+    /* Hero: Stack image and text */
+    .hero { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .hero-title { font-size: 34px; }
+    .hero-desc { margin: 0 auto; }
+    .hero-buttons { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-right { height: 320px; order: -1; } /* Image first on mobile */
+    .hero-badge { right: 10px; bottom: 10px; }
+
+    /* Grids: Single column layout */
+    .services-grid, .team-grid, .why-inner, .clinic-section, .footer-grid, .svc-detail-inner {
+        grid-template-columns: 1fr !important;
+        gap: 32px;
+    }
+
+    /* Adjust specific elements */
+    .why-img { height: 200px; }
+    .clinic-map { height: 300px; }
+    
+    /* Reverse columns on Detail sections (Image vs Text) */
+    .svc-detail-inner.reverse { direction: ltr; } 
+    
+    /* Footer alignment */
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-brand-desc { max-width: 100%; }
 }
   </style>
 </head>
